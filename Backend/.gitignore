@@ -1,0 +1,38 @@
+# Build Folders (you can keep bin if you'd like, to store dlls and exes)
+bin/
+obj/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# Mac OS
+.DS_Store
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.log
+*.tlog
+*.cache
+*.ide
+
+# VS Code directories
+.vscode/
+
+# Logs
+*.log
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Entity Framework Core
+Migrations/
