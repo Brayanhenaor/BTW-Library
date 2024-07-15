@@ -1,9 +1,9 @@
-import { AuthorUsesCases } from './../../../../domain/usecases/authorUseCases';
+import { AuthorUsesCases } from '../../../../domain/usecases/author.usecase';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BaseResponse } from '../../../../domain/models/base';
 import { Author } from '../../../../domain/models/author';
-import { BooksUsesCases } from '../../../../domain/usecases/booksUseCases';
+import { BooksUsesCases } from '../../../../domain/usecases/books.usecase';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

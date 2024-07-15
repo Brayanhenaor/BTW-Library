@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AuthorUsesCases } from '../../../../domain/usecases/authorUseCases';
+import { AuthorUsesCases } from '../../../../domain/usecases/author.usecase';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 

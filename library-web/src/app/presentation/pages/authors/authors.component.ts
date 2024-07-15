@@ -3,7 +3,7 @@ import { BaseResponse } from '../../../domain/models/base';
 import { AuthorsApiService } from './../../../infraestructure/api/authors.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthorItemComponent } from './author-item/author-item.component';
-import { AuthorUsesCases } from '../../../domain/usecases/authorUseCases';
+import { AuthorUsesCases } from '../../../domain/usecases/author.usecase';
 import { AddAuthorComponent } from './add-author/add-author.component';
 import { ToastrService } from 'ngx-toastr';
 import { NgIconsModule } from '@ng-icons/core';

@@ -15,11 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
@@ -27,7 +25,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder =>
     {
         builder
-            .WithOrigins("http://localhost:4200") // Asegúrate de que coincida con el origen de tu aplicación Angular
+            .WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -38,7 +36,6 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "BTW", Version = "v1" });
 
-    // Configuración para incluir el Bearer token en Swagger
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
@@ -99,7 +96,6 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

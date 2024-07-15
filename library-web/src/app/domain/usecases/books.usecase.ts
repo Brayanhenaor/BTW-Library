@@ -1,4 +1,4 @@
-import { BookRequest } from './../models/book';
+import { BookRequest } from '../models/book';
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BaseResponse } from "../models/base";

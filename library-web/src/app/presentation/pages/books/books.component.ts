@@ -1,6 +1,6 @@
 import { BookItemComponent } from './book-item/book-item.component';
 import { Component, OnInit } from '@angular/core';
-import { BooksUsesCases } from '../../../domain/usecases/booksUseCases';
+import { BooksUsesCases } from '../../../domain/usecases/books.usecase';
 import { LoanUsesCases } from '../../../domain/usecases/loanUseCases';
 import { BookResponse } from '../../../domain/models/book';
 import { BaseResponse } from '../../../domain/models/base';
