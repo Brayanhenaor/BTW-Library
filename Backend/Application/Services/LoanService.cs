@@ -45,7 +45,17 @@ namespace Application.Services
 
         public async Task<Guid> ReserveBook(string userId, Guid bookId)
         {
+            var bookIsAvailable = await loanRepository.GetBookIsAvailable(bookId);
+            if (!bookIsAvailable)
+                throw new BookNotAvailableException();
+
             return await loanRepository.ReserveBook(userId, bookId);
+        }
+
+        public async Task<IEnumerable<LoanResponseDTO>> GetMyReservations(string userId)
+        {
+            var reservations = await loanRepository.GetMyReservations(userId);
+            return mapper.Map<List<LoanResponseDTO>>(reservations);
         }
     }
 }

@@ -1,0 +1,24 @@
+<nav>
+    <div class="w-full flex justify-between items-center bg-neutral-900 text-white py-5 px-7">
+        <h1 class="text-xl">BTW Library</h1>
+
+        <ul class="flex gap-3 items-center">
+            <li>
+                <a routerLink="books" routerLinkActive="text-yellow-500">
+                    Books
+                </a>
+            </li>
+            <li>
+                <a routerLink="authors" routerLinkActive="text-yellow-500">
+                    Authors
+                </a>
+            </li>
+
+            <li (click)="closeSesion()" class="cursor-pointer bg-gray-300 px-2 py-1 rounded-lg">
+                <a class=" font-bold text-lg text-black" >
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

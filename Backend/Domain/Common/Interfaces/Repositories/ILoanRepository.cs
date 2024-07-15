@@ -10,6 +10,8 @@ namespace Domain.Common.Interfaces.Repositories
         Task<IEnumerable<Loan>> GetAllLoans();
         Task<Loan> GetLoanById(Guid id);
         Task<Guid> ReserveBook(string userId, Guid bookId);
+        Task<IEnumerable<Loan>> GetMyReservations(string userId);
+        Task<bool> GetBookIsAvailable(Guid bookId);
     }
 }
 

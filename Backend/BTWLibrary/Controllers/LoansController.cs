@@ -1,4 +1,5 @@
 ﻿using System;
+using Application.Services;
 using Domain.Common.Interfaces.Services;
 using Domain.DTO.Request;
 using Domain.DTO.Response;
@@ -11,7 +12,7 @@ namespace BTWLibrary.Controllers
     [Route("api/[controller]")]
     public class LoansController : ControllerBase
     {
-        private readonly ILoanService _loanService; 
+        private readonly ILoanService _loanService;
 
         public LoansController(ILoanService loanService)
         {
@@ -21,7 +22,7 @@ namespace BTWLibrary.Controllers
         [HttpGet]
         public async Task<IEnumerable<LoanResponseDTO>> GetLoans()
         {
-            return await _loanService.GetAllLoans(); 
+            return await _loanService.GetAllLoans();
         }
 
         [HttpGet("{id}")]
@@ -30,10 +31,14 @@ namespace BTWLibrary.Controllers
             return await _loanService.GetLoanById(id);
         }
 
-        [HttpPost("reserve")]
-        public async Task<ActionResult> ReserveBook([FromBody] ReserveBookRequest request)
+        [HttpPost("reserve/{bookId}")]
+        public async Task<ActionResult> ReserveBook(Guid bookId)
         {
-            var reservationId = await _loanService.ReserveBook(request.UserId, request.BookId);
+            var userIdClaim = User.FindFirst("id");
+
+            var userId = userIdClaim.Value;
+
+            var reservationId = await _loanService.ReserveBook(userId, bookId);
 
             return Ok(new { ReservationId = reservationId });
         }
@@ -42,6 +47,16 @@ namespace BTWLibrary.Controllers
         public async Task CancelReservation(Guid id)
         {
             await _loanService.CancelReservation(id);
+        }
+
+        [HttpGet("my-reservations")]
+        public async Task<IEnumerable<LoanResponseDTO>> GetMyReservations()
+        {
+            var userIdClaim = User.FindFirst("id");
+
+            var userId = userIdClaim.Value;
+
+            return await _loanService.GetMyReservations(userId);
         }
 
     }

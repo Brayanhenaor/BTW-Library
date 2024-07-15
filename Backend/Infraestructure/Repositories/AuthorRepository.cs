@@ -17,7 +17,7 @@ namespace Infraestructure.Repositories
 
         public async Task<IEnumerable<Author>> GetAllAsync()
         {
-            return await _dbContext.Set<Author>().ToListAsync();
+            return await _dbContext.Set<Author>().Include(author=> author.Books).ToListAsync();
         }
 
         public async Task<Author> GetByIdAsync(Guid id)

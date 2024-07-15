@@ -65,17 +65,15 @@ namespace Infraestructure.Middlewares
                 int status;
                 string message;
 
-                switch (exception)
+                if (exception is BaseException baseException)
                 {
-                    case BookNotFoundException e:
-                        status = e.HttpStatusCode;
-                        message = exception.Message;
-                        break;
-
-                    default:
-                        status = 500;
-                        message = "An unexpected error occurred.";
-                        break;
+                    status = baseException.HttpStatusCode;
+                    message = exception.Message;
+                }
+                else
+                {
+                    status = 500;
+                    message = "An unexpected error occurred.";
                 }
 
                 context.Response.StatusCode = status;

@@ -17,12 +17,12 @@ namespace Infraestructure.Repositories
 
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(book=> book.Author).ToListAsync();
         }
 
         public async Task<Book> GetBookByIdAsync(Guid id)
         {
-            return await _context.Books.FindAsync(id);
+            return await _context.Books.Include(book => book.Author).FirstOrDefaultAsync(book=> book.Id == id);
         }
 
         public async Task<Guid> CreateBookAsync(Book book)

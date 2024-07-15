@@ -1,0 +1,6 @@
+<div class="bg-white rounded-lg shadow-md p-4">
+    <h2 class="text-xl font-bold mb-2">{{ author?.firstName }} {{author?.lastName}}</h2>
+    <h2 class="text-md mb-2">Books count: {{ author?.booksCount }}</h2>
+    <ng-icon (click)="delete.emit()" name="heroTrashSolid"
+            class="cursor-pointer text-3xl text-red-600"></ng-icon>
+</div>

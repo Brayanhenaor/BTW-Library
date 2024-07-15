@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Common.Interfaces.Repositories;
+﻿using Domain.Common.Interfaces.Repositories;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,9 @@ namespace Infraestructure.Repositories
         public async Task CancelReservation(Loan loan)
         {
             context.Loans.Remove(loan);
+            var book = await context.Books.FirstOrDefaultAsync(book => book.Id == loan.BookId);
+            if (book != null)
+                book.IsAvailable = true;
             await context.SaveChangesAsync();
         }
 
@@ -31,6 +33,18 @@ namespace Infraestructure.Repositories
             return await context.Loans.Include(loan => loan.User).Include(loan => loan.Book).FirstOrDefaultAsync(loan => loan.Id == id);
         }
 
+        public async Task<IEnumerable<Loan>> GetMyReservations(string userId)
+        {
+            return await context.Loans.Include(loan => loan.User).Include(loan => loan.Book)
+                .Where(loan=> loan.UserId == userId).ToListAsync();
+        }
+
+        public async Task<bool> GetBookIsAvailable(Guid bookId)
+        {
+            var book = await context.Books.FirstOrDefaultAsync(book => book.Id == bookId);
+            return book?.IsAvailable ?? false;
+        }
+
         public async Task<Guid> ReserveBook(string userId, Guid bookId)
         {
             var loan = new Loan
@@ -42,6 +56,9 @@ namespace Infraestructure.Repositories
             };
 
             await context.Loans.AddAsync(loan);
+            var book = await context.Books.FirstOrDefaultAsync(book => book.Id == bookId);
+            if (book != null)
+                book.IsAvailable = false;
             await context.SaveChangesAsync();
 
             return loan.Id;

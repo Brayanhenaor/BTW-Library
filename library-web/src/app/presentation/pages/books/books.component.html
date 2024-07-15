@@ -1,0 +1,36 @@
+<div class="relative">
+    <div class="container mx-auto">
+        <div class="flex flex-col items-center flex-wrap justify-center">
+            <div class="flex mb-4 items-center gap-1">
+                <h2 class="text-2xl font-bold">Books</h2>
+                <ng-icon (click)="handleAdd()" class="cursor-pointer text-sky-600 text-3xl"
+                    name="heroPlusCircleSolid"></ng-icon>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Iterar sobre la lista de libros -->
+                @for (book of books; track $index) {
+                <app-book-item [book]="book" (delete)="delete($event)" (reserve)="reserve($event)"></app-book-item>
+                }
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center flex-wrap mt-4 justify-center">
+            <h2 class="text-2xl font-bold">My reservations</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Iterar sobre la lista de libros -->
+                @for (loan of loans; track $index) {
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h2 class="text-xl font-bold mb-2">{{ loan.bookName }}</h2>
+                    <p class="text-gray-600 mb-2">Loan date: {{loan.loanDate | date:'dd/MM/yyyy' }} </p>
+                    <p class="text-gray-600 mb-2">Return Date: {{ loan.returnDate | date:'dd/MM/yyyy' }}</p>
+                    <button (click)="returnBook(loan.id)"
+                        class="bg-red-600 rounded-xl p-3 text-white font-bold">Devolver</button>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (showAdd) {
+    <app-add-book (close)="showAdd=false" (added)="ngOnInit()"></app-add-book>
+    }
+</div>

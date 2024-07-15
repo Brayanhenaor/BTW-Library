@@ -16,16 +16,9 @@ namespace BTWLibrary.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest model)
+        public async Task Register([FromBody] RegisterRequest model)
         {
-            var result = await authenticationService.RegisterAsync(model);
-
-            if (result.Succeeded)
-            {
-                return Ok(new { Result = "User created successfully" });
-            }
-
-            return BadRequest(result.Errors);
+            await authenticationService.RegisterAsync(model);
         }
 
         [HttpPost("login")]

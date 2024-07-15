@@ -1,6 +1,7 @@
 ﻿using System;
 using Application.DTO.Request;
 using Domain.Common.Interfaces.Services;
+using Domain.DTO.Response;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,21 +21,15 @@ namespace BTWLibrary.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+        public async Task<IEnumerable<AuthorResponseDTO>> GetAuthors()
         {
-            var authors = await _authorService.GetAuthorsAsync();
-            return Ok(authors);
+            return await _authorService.GetAuthorsAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthorById(Guid id)
+        public async Task<ActionResult<AuthorResponseDTO>> GetAuthorById(Guid id)
         {
-            var author = await _authorService.GetAuthorByIdAsync(id);
-            if (author == null)
-            {
-                return NotFound();
-            }
-            return Ok(author);
+            return await _authorService.GetAuthorByIdAsync(id);
         }
 
         [HttpPost]

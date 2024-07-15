@@ -1,0 +1,36 @@
+<div class="w-screen h-screen absolute bg-black/[.7] top-0">
+    <div class="flex justify-center items-center w-full h-full">
+        <div class="bg-white p-5 rounded-lg">
+            <span class="text-xl font-bold">Agregar autor</span>
+            <form class="flex flex-col gap-2 my-2" [formGroup]="addAuthorForm" (ngSubmit)="submitForm()" action="#">
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-900">Firstname</label>
+                    <input type="text" formControlName="firstName" name="firstName" id="firstName"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Brayan" required="">
+                </div>
+                <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-900">Lastname</label>
+                    <input type="text" formControlName="lastName" name="lastName" id="lastName"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Henao" required="">
+                </div>
+                <div>
+                    <label for="document" class="block text-sm font-medium text-gray-900">Document</label>
+                    <input type="text" formControlName="document" name="document" id="document"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="121474643" required="">
+                </div>
+
+                <button type="submit"
+                    class="w-full text-white bg-sky-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Agregar
+                </button>
+                <button (click)="handleClose()" type="button"
+                    class="w-full text-white bg-red-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Cerrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

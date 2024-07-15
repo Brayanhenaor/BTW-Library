@@ -1,7 +1,6 @@
-﻿using System;
-using Domain.Common.Interfaces.Services;
+﻿using Domain.Common.Interfaces.Services;
 using Domain.DTO.Request;
-using Domain.Entities;
+using Domain.DTO.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,14 +19,14 @@ namespace BTWLibrary.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookResponseDTO>>> GetBooks()
         {
             var books = await _bookService.GetBooksAsync();
             return Ok(books);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBookById(Guid id)
+        public async Task<ActionResult<BookResponseDTO>> GetBookById(Guid id)
         {
             var book = await _bookService.GetBookByIdAsync(id);
             if (book == null)

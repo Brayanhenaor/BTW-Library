@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Common.Interfaces;
 using Domain.Common.Interfaces.Services;
 using Domain.DTO.Request;
+using Domain.DTO.Response;
 using Domain.Entities;
 
 namespace Application.Services
@@ -18,14 +19,14 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Book>> GetBooksAsync()
+        public async Task<IEnumerable<BookResponseDTO>> GetBooksAsync()
         {
-            return await _bookRepository.GetBooksAsync();
+            return mapper.Map<IEnumerable<BookResponseDTO>>(await _bookRepository.GetBooksAsync());
         }
 
-        public async Task<Book> GetBookByIdAsync(Guid id)
+        public async Task<BookResponseDTO> GetBookByIdAsync(Guid id)
         {
-            return await _bookRepository.GetBookByIdAsync(id);
+            return mapper.Map<BookResponseDTO>(await _bookRepository.GetBookByIdAsync(id));
         }
 
         public async Task<Guid> CreateBookAsync(BookRequestDTO book)

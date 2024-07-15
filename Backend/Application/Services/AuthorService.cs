@@ -1,9 +1,10 @@
-﻿using System;
-using Application.DTO.Request;
+﻿using Application.DTO.Request;
 using AutoMapper;
 using Domain.Common.Interfaces.Repositories;
 using Domain.Common.Interfaces.Services;
+using Domain.DTO.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 
 namespace Application.Services
 {
@@ -18,14 +19,14 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Author>> GetAuthorsAsync()
+        public async Task<IEnumerable<AuthorResponseDTO>> GetAuthorsAsync()
         {
-            return await _authorRepository.GetAllAsync();
+            return mapper.Map<IEnumerable<AuthorResponseDTO>>(await _authorRepository.GetAllAsync());
         }
 
-        public async Task<Author> GetAuthorByIdAsync(Guid id)
+        public async Task<AuthorResponseDTO> GetAuthorByIdAsync(Guid id)
         {
-            return await _authorRepository.GetByIdAsync(id);
+            return mapper.Map<AuthorResponseDTO>(await _authorRepository.GetByIdAsync(id));
         }
 
         public async Task<Guid> CreateAuthorAsync(AuthorRequestDTO author)
@@ -38,7 +39,7 @@ namespace Application.Services
             var entity = await _authorRepository.GetByIdAsync(id);
             if (entity == null)
             {
-                throw new ArgumentException($"Author with id {id} not found");
+                throw new AuthorNotFoundException();
             }
 
             mapper.Map(author, entity);
