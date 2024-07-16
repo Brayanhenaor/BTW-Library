@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthUsesCases } from '../../../domain/usecases/loginUseCases';
 import { BaseResponse } from '../../../domain/models/base';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authUseCases: AuthUsesCases,
-    private router: Router
+    private router: Router,
+    private toaster: ToastrService
   ) {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -35,6 +37,7 @@ export class RegisterComponent {
   handleRegister(): void {
     const { username, password, email } = this.registerForm.value;
     this.authUseCases.register({ email, username, password }).subscribe((data: BaseResponse<any>) => {
+      this.toaster.success('Usuario creado, inicia sesion', 'Exito')
       this.router.navigate(['/login'])
     });;
   }
