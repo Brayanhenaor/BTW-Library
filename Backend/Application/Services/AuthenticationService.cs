@@ -7,6 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Domain.Common.Interfaces.Services;
+using Domain.DTO.Response;
+using Domain.Exceptions;
 
 namespace Application.Services
 {
@@ -29,7 +31,7 @@ namespace Application.Services
             return await userManager.CreateAsync(user, model.Password);
         }
 
-        public async Task<string> LoginAsync(LoginRequest model)
+        public async Task<LoginResponseDTO> LoginAsync(LoginRequest model)
         {
             var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
@@ -39,10 +41,10 @@ namespace Application.Services
                 return GenerateJwtToken(user);
             }
 
-            return null;
+            throw new LoginInvalidException();
         }
 
-        private string GenerateJwtToken(User user)
+        private LoginResponseDTO GenerateJwtToken(User user)
         {
             var claims = new[]
             {
@@ -61,7 +63,10 @@ namespace Application.Services
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new LoginResponseDTO(
+                new JwtSecurityTokenHandler().WriteToken(token),
+                DateTime.Now.AddDays(1)
+            );
         }
     }
 }

@@ -38,14 +38,10 @@ namespace Infraestructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBookAsync(Guid id)
+        public async Task DeleteBookAsync(Book book)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book != null)
-            {
-                _context.Books.Remove(book);
-                await _context.SaveChangesAsync();
-            }
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
         }
     }
 }

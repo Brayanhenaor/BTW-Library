@@ -1,5 +1,6 @@
 ﻿using Domain.Common.Interfaces.Services;
 using Domain.DTO.Request;
+using Domain.DTO.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTWLibrary.Controllers
@@ -16,22 +17,15 @@ namespace BTWLibrary.Controllers
         }
 
         [HttpPost("register")]
-        public async Task Register([FromBody] RegisterRequest model)
+        public async Task Register(RegisterRequest model)
         {
             await authenticationService.RegisterAsync(model);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest model)
+        public async Task<LoginResponseDTO> Login(LoginRequest model)
         {
-            var token = await authenticationService.LoginAsync(model);
-
-            if (token != null)
-            {
-                return Ok(new { Token = token });
-            }
-
-            return Unauthorized();
+            return await authenticationService.LoginAsync(model);
         }
     }
 }

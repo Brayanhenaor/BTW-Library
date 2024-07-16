@@ -9,7 +9,7 @@ namespace Domain.Common.Interfaces
         Task<Book> GetBookByIdAsync(Guid id);
         Task<Guid> CreateBookAsync(Book book);
         Task UpdateBookAsync(Book book);
-        Task DeleteBookAsync(Guid id);
+        Task DeleteBookAsync(Book book);
     }
 }
 

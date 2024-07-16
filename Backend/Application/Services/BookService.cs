@@ -1,10 +1,10 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Common.Interfaces;
 using Domain.Common.Interfaces.Services;
 using Domain.DTO.Request;
 using Domain.DTO.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 
 namespace Application.Services
 {
@@ -39,7 +39,7 @@ namespace Application.Services
             var entity = await _bookRepository.GetBookByIdAsync(id);
             if (entity == null)
             {
-                throw new ArgumentException($"Book with id {id} not found");
+                throw new BookNotFoundException($"Book with id {id} not found");
             }
 
             mapper.Map(book, entity);
@@ -50,7 +50,13 @@ namespace Application.Services
 
         public async Task DeleteBookAsync(Guid id)
         {
-            await _bookRepository.DeleteBookAsync(id);
+            var entity = await _bookRepository.GetBookByIdAsync(id);
+            if (entity == null)
+            {
+                throw new BookNotFoundException($"Book with id {id} not found");
+            }
+
+            await _bookRepository.DeleteBookAsync(entity);
         }
     }
 }
