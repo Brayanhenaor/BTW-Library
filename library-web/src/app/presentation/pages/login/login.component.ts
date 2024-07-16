@@ -2,10 +2,12 @@ import { BaseResponse } from './../../../domain/models/base';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthUsesCases } from '../../../domain/usecases/loginUseCases';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { LoginResponse } from '../../../domain/models/login';
 import { AuthService } from '../../../infraestructure/services/auth.service';
 import { Router } from '@angular/router'; // Importa el Router
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _loginUseCase: AuthUsesCases,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -41,7 +44,9 @@ export class LoginComponent implements OnInit {
 
   handleLogin(): void {
     const { username, password } = this.loginForm.value;
-    this.response$ = this._loginUseCase.login({ username, password });
+    this.response$ = this._loginUseCase.login({ username, password }).pipe(
+      catchError((e) => this.handleError(e))
+    );
 
     this.response$.subscribe((data: BaseResponse<LoginResponse>) => {
       this.datos = data;
@@ -50,6 +55,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/books']);
       }
     });
+  }
+
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    if (error.status) {
+      this.toastr.error('Email o clave incorrectos', 'Error')
+    }
+    return throwError(() => new Error(error.message));
   }
 
   handleRegister() {
