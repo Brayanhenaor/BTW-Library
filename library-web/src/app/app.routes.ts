@@ -11,15 +11,20 @@ import { RegisterComponent } from './presentation/pages/register/register.compon
 export const routes: Routes = [
     {
         path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+        path: '',
         component: AuthLayoutComponent,
         canActivate: [LoginGuard],
-        children:[
+        children: [
             {
-                path:'login',
+                path: 'login',
                 component: LoginComponent
             },
             {
-                path:'register',
+                path: 'register',
                 component: RegisterComponent
             }
         ]
@@ -28,17 +33,16 @@ export const routes: Routes = [
         path: '',
         component: LoggedLayoutComponent,
         canActivate: [AuthGuard],
-        children:[
+        children: [
             {
-                path:'books',
+                path: 'books',
                 component: BooksComponent
             },
             {
-                path:'authors',
+                path: 'authors',
                 component: AuthorsComponent
             }
         ]
     },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
